@@ -3,20 +3,36 @@ projet de devops en m1 info
 
 ## Fonctionnalités
 
-hehe
+A CHANGER
 
 ## Choix d'outils
 
-aihzof
+- Git
+
+Nous avons choisi Github car chaque membre du groupe avait déjà un compte sur le site
+
+- Maven
+
+Est un outil de compilation de code Java, très efficace et facile de compréhension.
+
+- JUnit
+
+A été choisi pour effectuer les tests unitaire du code du projet
+
+- Evaluation de couverture de code (à choisir)
+
+Outil pour évaluer la couverture de code pendant que l'on effectue les tests unitaires
 
 ## Workflow Git
 
-huhuhuh
+Nous avons fait une branche par feature
 
-## Docker si fée
+## Docker
 
-wailord >>>
+Service externe que seul l'administrateur (Lucas) peut lier au projet
 
 ## Feedback
 
-noice
+Pour chaque outil, donner notre expérience
+
+![Etourmi shiny](https://media.tenor.com/zfonKmPNbiEAAAAM/breakfast-club-cool.gif)
