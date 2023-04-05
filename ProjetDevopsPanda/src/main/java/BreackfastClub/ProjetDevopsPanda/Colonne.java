@@ -3,11 +3,23 @@ package BreackfastClub.ProjetDevopsPanda;
 public class Colonne <T>{
 	
 	private String label;
-	private T[] tab;
+	private T[] content;
 	
 	public Colonne(String s, T[]tableau) {
 		label = s;
-		tab = tableau;
+		content = tableau;
+	}
+	
+	//TODO: check for out of bounds
+	public T get(int index) {
+		return content[index];
 	}
 
+	public int length() {
+		return content.length;
+	}
+	
+	public String getLabel() {
+		return label;
+	}
 }
