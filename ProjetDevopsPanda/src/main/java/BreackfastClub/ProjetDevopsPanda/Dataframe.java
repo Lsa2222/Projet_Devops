@@ -26,7 +26,7 @@ public class Dataframe {
 		
 		columns = new Colonne[content.length];
 		
-		for(int i=0;i<=content.length;i++) {
+		for(int i=0;i<content.length;i++) {
 			String name = generateName(columnId.getAndIncrement());
 			columns[i] = new Colonne(name, content[i]);
 		}
@@ -34,26 +34,27 @@ public class Dataframe {
 	
 	@Override
 	public String toString() {
-		int[] columnSizes = new int[columns.length+1];
-		columnSizes[0] = 2;
-		for(int i = 1;i<columnSizes.length;i++) {
-			Colonne currCol = columns[i];
-			int maxsize = currCol.getLabel().length();
+
+		String[][] rawdata;
+		rawdata = new String[columns.length+1][];
+
+		for(int i = 1;i<rawdata.length;i++) {
+
+			Colonne currCol = columns[i-1];
+			String[] currColData = new String[currCol.length()+1];
+
+			currColData[0] = currCol.getLabel();
+
 			for(int j=0;j<currCol.length();j++) {
-				if (currCol.get(j).toString().length()>maxsize)
-					maxsize = currCol.get(j).toString().length();
+				currColData[j+1] = currCol.get(j).toString();
 			}
-			columnSizes[i] = maxsize;
+
+			rawdata[i] = currColData;
 		}
 		
-		StringBuilder builder = new StringBuilder();
-		
-		//TODO: actually build the string
-		//to keep in mind: 
-		//not all columns are of the same height
-		//we add a column to the left to indicate line index..
-		
-		return "stfu";
+		//we delegate the creation of the table to a specialized class to limit the code here (bad?)
+		//TODO check for empty things, maybe?
+		return TableCreator.createTable(rawdata);
 	}
 	
 	

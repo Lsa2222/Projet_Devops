@@ -9,6 +9,7 @@ public class main {
 		Object[][] c = {a, b};
 		
 		Dataframe d = new Dataframe(c);
+		System.out.println(d.toString());
 	}
 
 }
