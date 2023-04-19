@@ -1,6 +1,6 @@
-[![Maven](https://badgen.net/badge/icon/maven?icon=maven&label)](https://maven.apache.org/)
-[![Coverage](https://badgen.net/badge/icon/codecov?icon=codecov&label)](https://www.eclemma.org//)
-[![Tests](https://badgen.net/badge/icon/bitcoin-lightning?icon=bitcoin-lightning&label)](https://junit.org/junit5/)
+[![Maven](https://maven-badges.herokuapp.com/maven-central/cz.jirutka.rsql/rsql-parser/badge.svg)](https://maven.apache.org/)
+[![Coverage](https://badgen.net/badge/icon/codecov?icon=codecov&label=Coverage)](https://www.eclemma.org//)
+[![Tests](https://badgen.net/badge/icon/bitcoin-lightning?icon=bitcoin-lightning&label=Tests)](https://junit.org/junit5/)
 
 # Projet_Devops
 projet de devops en m1 info
