@@ -1,5 +1,8 @@
 package BreackfastClub.ProjetDevopsPanda;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -32,6 +35,57 @@ public class Dataframe {
 		}
 	}
 	
+	public Dataframe(String[] tab_names) {
+		columns = new Colonne[tab_names.length];
+		
+		for (int i = 0;i<tab_names.length;i++) {
+			columns[i] = new Colonne(tab_names[i],null);
+		}
+	}
+	
+	public Dataframe(int nbcols) {
+		
+		//TODO: check for empty content and/or empty columns
+		
+		columns = new Colonne[nbcols];
+		
+		for(int i=0;i<nbcols;i++) {
+			String name = generateName(columnId.getAndIncrement());
+			columns[i] = new Colonne(name, null);
+		}
+	}
+	/*
+	public Dataframe(String file_name) {
+	    try
+	    {
+	      // Le fichier d'entrée
+	      File file = new File(file_name);    
+	      // Créer l'objet File Reader
+	      FileReader fr = new FileReader(file);  
+	      // Créer l'objet BufferedReader        
+	      BufferedReader br = new BufferedReader(fr);   
+	      String[] HeadLine = br.readLine().split(";");
+	 
+	      
+	      
+	      
+	      
+	      while((line = br.readLine()) != null)
+	      {
+	        // ajoute la ligne au buffer
+	        sb.append(line);      
+	        sb.append("\n");     
+	      }
+	      fr.close();    
+	      System.out.println("Contenu du fichier: ");
+	      System.out.println(sb.toString());  
+	    }
+	    catch(IOException e)
+	    {
+	      e.printStackTrace();
+	    }
+	}
+	*/
 	@Override
 	public String toString() {
 
