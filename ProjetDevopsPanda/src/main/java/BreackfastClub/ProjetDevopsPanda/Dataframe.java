@@ -86,6 +86,19 @@ public class Dataframe {
 	    }
 	}
 	*/
+	
+	public void addLine(Object[] line) {
+		Object content[] = new Object[columns[0].length()+1];
+		for (int i = 0;i<columns.length;i++) {
+			for (int j = 0;j<columns.length;j++) {
+				content[j] = columns[i].get(j);
+			}
+			content[columns[i].length()] = line[i];
+			columns[i] = new Colonne(columns[i].getLabel(), content);
+		}
+	}
+	
+	
 	@Override
 	public String toString() {
 
