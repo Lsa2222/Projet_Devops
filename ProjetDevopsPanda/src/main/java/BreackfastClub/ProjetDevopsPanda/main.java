@@ -7,9 +7,20 @@ public class main {
 		String[] a = {"one", "seven", "twelve"};
 		Integer[] b = {1, 7, 12};
 		Object[][] c = {a, b};
+		int d = 4;
 		
-		Dataframe d = new Dataframe(c);
-		System.out.println(d.toString());
+		/*Dataframe da = new Dataframe(a);
+		System.out.println(da.toString());*/
+		
+		// CSV
+		
+		Dataframe db = new Dataframe("D:\\Documents\\M1\\SEMESTRE2\\devops\\projet\\testcsv.csv");
+		System.out.println(db.toString());
+		
+		/*Dataframe dc = new Dataframe(c);
+		System.out.println(dc.toString());*/
+		
+		
 	}
 
 }

@@ -14,12 +14,16 @@ public class Colonne <T>{
 	public T get(int index) {
 		return content[index];
 	}
-
+	
 	public int length() {
 		return content.length;
 	}
 	
 	public String getLabel() {
 		return label;
+	}
+	
+	public Boolean isNull(){
+		return content == null;
 	}
 }
