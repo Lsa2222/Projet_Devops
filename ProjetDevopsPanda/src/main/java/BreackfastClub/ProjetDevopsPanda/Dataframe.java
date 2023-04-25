@@ -90,14 +90,72 @@ public class Dataframe {
 		else 
 			index = columns[0].length();
 		
-		Object content[] = new Object[index+1];
 		for (int i = 0;i<columns.length;i++) {
+			Object content[] = new Object[index+1];
 			for (int j = 0;j<index;j++) {
 				content[j] = columns[i].get(j);
 			}
 			content[index] = line[i];
 			columns[i] = new Colonne(columns[i].getLabel(), content);
 		}
+	}
+	
+	public void setCol(Object indice, Object[] col) {
+		int position = -1;
+		String label = "";
+		if ((indice.getClass().getSimpleName()).equals("String")) {
+			for(int i = 0;i<columns.length;i++) {
+				if (columns[i].getLabel() == indice) {
+					position = i;
+				}
+			}
+			label = indice.toString();
+		}
+		else if ((indice.getClass().getSimpleName()).equals("Integer")){
+			position = (Integer)indice;
+			label = columns[position].getLabel();
+		}
+		else {
+			return;
+		}
+		Colonne colonne = new Colonne(label,col);
+		columns[position] = colonne;
+	}
+	
+	public Dataframe getColonne(Object indice) {
+		int position = -1;
+		String[] label = {""};
+		if ((indice.getClass().getSimpleName()).equals("String")) {
+			for(int i = 0;i<columns.length;i++) {
+				if (columns[i].getLabel() == indice) {
+					position = i;
+				}
+			}
+			label[0] = indice.toString();
+		}
+		else if ((indice.getClass().getSimpleName()).equals("Integer")){
+			position = (Integer)indice;
+			label[0] = columns[position].getLabel();
+		}
+		else {
+			return null;
+		}
+		Dataframe dat = new Dataframe(label);
+		dat.setCol(0, columns[position].getContent());
+		return dat;
+	}
+	
+	public Dataframe getLigne(int indice){
+		String[] labels = {""};
+		for(int i =0;i<columns.length;i++) {
+			labels[i] = columns[i].getLabel();
+		}
+		Dataframe data = new Dataframe(labels);
+		for (int i =0;i<columns.length;i++) {
+			Object[] val = {columns[i].get(indice)};
+			data.setCol(i,val);
+		}
+		return data;
 	}
 	
 	
@@ -118,7 +176,6 @@ public class Dataframe {
 				currColData[j+1] = currCol.get(j).toString();
 			}
 			rawdata[i+1] = currColData;
-			System.out.println(rawdata[i]);
 		}
 		int size = 0;
 		for(int i = 1;i<rawdata.length;i++) {

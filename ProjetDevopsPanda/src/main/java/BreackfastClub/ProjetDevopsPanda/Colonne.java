@@ -26,4 +26,8 @@ public class Colonne <T>{
 	public Boolean isNull(){
 		return content == null;
 	}
+	
+	public T[] getContent() {
+		return content;
+	}
 }
