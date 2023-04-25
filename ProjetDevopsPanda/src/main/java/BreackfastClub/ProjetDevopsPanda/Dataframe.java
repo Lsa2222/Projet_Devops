@@ -124,7 +124,7 @@ public class Dataframe {
 	
 	public Dataframe getColonne(Object indice) {
 		int position = -1;
-		String[] label = {""};
+		String[] label = new String[columns.length];
 		if ((indice.getClass().getSimpleName()).equals("String")) {
 			for(int i = 0;i<columns.length;i++) {
 				if (columns[i].getLabel() == indice) {
@@ -146,7 +146,7 @@ public class Dataframe {
 	}
 	
 	public Dataframe getLigne(int indice){
-		String[] labels = {""};
+		String[] labels = new String[columns.length];
 		for(int i =0;i<columns.length;i++) {
 			labels[i] = columns[i].getLabel();
 		}
