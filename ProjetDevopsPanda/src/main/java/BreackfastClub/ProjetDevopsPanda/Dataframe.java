@@ -82,6 +82,17 @@ public class Dataframe {
 	    }
 	}
 	
+	/*public Dataframe(String[] labels, Colonne[] newcolumns) {
+        if (labels.length != newcolumns.length) {
+            throw new IllegalArgumentException("Number of labels and columns must match");
+        }
+        for (int i = 0;i<tab_names.length;i++) {
+			columns[i] = new Colonne(labels[i],newcolumns[i]);
+		}
+        this.labels = labels;
+        this.columns = newcolumns;
+    }*/
+	
 	
 	public void addLine(Object[] line) {
 		Integer index;
@@ -159,6 +170,30 @@ public class Dataframe {
 	}
 	
 	
+	
+	public Colonne[] getColumns() {
+		return columns;
+	}
+
+	public void setColumns(Colonne[] columns) {
+		this.columns = columns;
+	}
+	
+	public String getSize() {
+	    int nb_rows = 0;
+	    int nb_cols = columns.length;
+	    if(columns.length > 0) {
+	    	if (columns[0].isNull()) {
+	    		nb_rows = 0;
+	    	}
+	    	else {
+	    		nb_rows = columns[0].length();
+	    	}
+	    }
+	    String taille = "lines : " + Integer.toString(nb_rows) + " cols : " + Integer.toString(nb_cols);
+	    return taille;
+	}
+
 	@Override
 	public String toString() {
 		//TODO check for empty things, maybe?
@@ -166,15 +201,21 @@ public class Dataframe {
 		rawdata = new String[columns.length+1][];
 
 		for(int i = 0;i<rawdata.length-1;i++) {
-
 			Colonne currCol = columns[i];
-			String[] currColData = new String[currCol.length()+1];
+			String[] currColData;
+			if (!(columns[i].isNull())) {
+				currColData = new String[currCol.length()+1];
 
-			currColData[0] = currCol.getLabel();
-
-			for(int j=0;j<currCol.length();j++) {
-				currColData[j+1] = currCol.get(j).toString();
+				currColData[0] = currCol.getLabel();
+				for(int j=0;j<currCol.length();j++) {
+					currColData[j+1] = currCol.get(j).toString();
+				}
 			}
+			else {
+				currColData = new String[1];
+				currColData[0] = currCol.getLabel();
+			}
+
 			rawdata[i+1] = currColData;
 		}
 		int size = 0;
@@ -191,6 +232,77 @@ public class Dataframe {
 		
 		return TableCreator.createTable(rawdata);
 	}
+	
+	public String partToString(int start, int end) {
+	    if (start < 0 || end >= columns[0].length() || start > end) {
+	        throw new IllegalArgumentException("Invalid indices");
+	    }
+	    StringBuilder sb = new StringBuilder();
+	    for (int i = start; i <= end; i++) {
+	        for (int j = 0; j < columns.length; j++) {
+	            sb.append(columns[j].get(i)).append("\t");
+	        }
+	        sb.append("\n");
+	    }
+	    return sb.toString();
+	}
+	
+	//ou en utilisant la méthode toString existante
+	/*public String partToString(int debut, int fin) {
+    String fullString = this.toString();
+    String[] lines = fullString.split("\n");
+    StringBuilder sb = new StringBuilder();
+    for (int i = debut; i < fin && i < lines.length; i++) {
+        sb.append(lines[i]).append("\n");
+    }
+    return sb.toString();
+	}*/
+	
+	public String startToString(int nb) {
+		return partToString(0,nb-1);
+	}
+	
+	public String endToString(int nb) {
+		return partToString(columns[0].length() - nb,columns[0].length()-1);
+	}
+	
+	public Object getCell(int row, int col) {
+		if (row < 0 || row >= columns[0].length() || col < 0 || col >= columns.length) {
+	        throw new IndexOutOfBoundsException("Invalid row or column index");
+	    }
+	    return columns[col].get(row);
+	}
+	
+	public void setCell(int row, int col, Object value) {
+		if (row < 0 || row >= columns[0].length() || col < 0 || col >= columns.length) {
+	        throw new IndexOutOfBoundsException("Invalid row or column index");
+	    }
+		columns[col].setValue(row, value);
+	}
+	
+	public void setLabel(int col, String value) {
+		if (col < 0 || col >= columns.length) {
+	        throw new IndexOutOfBoundsException("Invalid row or column index");
+	    }
+			columns[col].setLabel(value);
+	}
+	
+	/*public Dataframe getPartDataframe(int startrow, int endrow,int startcol, int endcol) {
+		if (startrow < 0 || startrow > endrow || endrow >= columns[0].length() || startcol < 0 || startcol > endcol || endcol >= columns.length) {
+	        throw new IllegalArgumentException("Indices invalides");
+	    }
+		String[] labels = new String[endcol - startcol];
+		for(int i =startcol;i<endcol;i++) {
+			labels[i] = columns[i].getLabel();
+		}
+		Colonne[] newcolumns = new Colonne[endcol - startcol + 1];
+	    for (int i = startcol; i <= endcol; i++) {
+	        Object[] newData = Arrays.copyOfRange(columns[i].getContent(), startrow, endrow + 1);
+	        newcolumns[i - startcol] = new Colonne(columns[i].getLabel(), newData);
+	    }
+	    Dataframe data = new Dataframe(labels,newcolumns);
+	    return data;
+	}*/
 	
 	
     /**
