@@ -33,7 +33,7 @@ jobs:
       run: mvn test package --file pom.xml
     - name: Output check
       run:
-        ls /target/
+        ls 
     - name: Save code coverage result as artifacts
       uses: actions/upload-artifact@v3
       with:
