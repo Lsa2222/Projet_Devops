@@ -100,7 +100,7 @@ public class Dataframe {
 
 	
 	/**
-	 * Add a line at the end of the dataframe
+	 * add a line at the end of the dataframe
 	 * @param line the line that has to be add in the dataframe
 	 * @throws DataframeNullException 
 	 */
