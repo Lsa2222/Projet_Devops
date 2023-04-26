@@ -31,7 +31,7 @@ jobs:
         cache: maven
     - name: Run tests
       run: |
-        mvn -B package -Pcoverage 
+        mvn -B package -Pcoverage -f /ProjetDevopsPanda
     - name: Output check
       run:
         ls 
