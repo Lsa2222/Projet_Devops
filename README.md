@@ -1,5 +1,5 @@
 [![Maven](https://maven-badges.herokuapp.com/maven-central/cz.jirutka.rsql/rsql-parser/badge.svg)](https://maven.apache.org/)
-[![Coverage](.github/badges/jacoco.svg)]
+[![Coverage](/badges/jacoco.svg)]
 [![Tests](https://badgen.net/badge/icon/Tests?icon=bitcoin-lightning&label)](https://junit.org/junit5/)
 [![Eclipse](https://badgen.net/badge/icon/eclipse?icon=eclipse&label)](https://junit.org/junit5/)
 
