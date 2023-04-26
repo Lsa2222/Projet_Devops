@@ -23,24 +23,27 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Set up JDK 11
+    - name: Set up JDK 18
       uses: actions/setup-java@v3
       with:
-        java-version: '11'
+        java-version: '18'
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
-      run: mvn --batch-mode --update-snapshots verify
+      run: mvn test package --file pom.xml
 
-    - name: Save artifacts
-      run: mkdir staging && cp target/*.jar staging
-    - uses: actions/upload-artifact@v3
+    - name: Save code coverage result as artifacts
+      uses: actions/upload-artifact@v3
       with:
-        name: Package
-        path: staging
-    - uses: stefanzweifel/git-auto-commit-action@v4
-      with:
-        commit_message: Updated files
+        name: pdfs
+        path: target/site/jacoco/jacoco.csv
+  badges:
+  
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: jacoco-badge-generator
+        uses: cicirello/jacoco-badge-generator@v2.8.1
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     #- name: Update dependency graph
     #  uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
