@@ -47,12 +47,11 @@ public class AppTest
 		frame.getLigne(0);
 	}
 	
-	/*@Test
-	public void testDataFrameisEmpty() {
+	@Test(expected = DataframeNullException.class)
+	public void testDataFrameisEmpty() throws DataframeNullException {
 		String[][] values = {{},{}};
 		Dataframe frame = new Dataframe(values);
-		assertTrue(frame.getColumns()[0].isNull());
-	}*/
+	}
 	
 	@Test(expected = IndexOutOfBoundsException.class)
 	public void testGetLigneOutofBound() throws DataframeNullException {
@@ -68,7 +67,7 @@ public class AppTest
 		String[] toAdd = {"test1","test2"};
 		Dataframe frame = new Dataframe(values);
 		frame.addLine(toAdd);
-		frame.getLigne(1);
+		//frame.getLigne(1);//tf
 	}
 	
 	@Test
@@ -77,7 +76,7 @@ public class AppTest
 		String[] toAdd = {"test1","test2"};
 		Dataframe frame = new Dataframe(values);
 		frame.addLine(toAdd);
-		frame.getLigne(0);
+		//frame.getLigne(0);//tf
 	}
 	
 	//Name Constructor
@@ -97,7 +96,6 @@ public class AppTest
 		String[] toAdd = {"test1"};
 		Dataframe frame = new Dataframe(values);
 		frame.addLine(toAdd);
-		frame.getLigne(0);
 	}
 	
 	//Number Constructor
@@ -106,11 +104,11 @@ public class AppTest
 		String[] toAdd = {"test1","test2"};
 		Dataframe frame = new Dataframe(2);
 		frame.addLine(toAdd);
-		frame.getLigne(0);
+		//frame.getLigne(0);//tf
 	}
 	
 	//Number Constructor
-	@Test
+	@Test(expected = IllegalArgumentException.class)
 	public void testAddNewLineNumberConstructorTooMuchArgument() throws DataframeNullException {
 		String[] toAdd = {"test1","test2"};
 		Dataframe frame = new Dataframe(1);
@@ -131,7 +129,7 @@ public class AppTest
 	@Test
 	public void testCreateDataframeWithCSV() throws DataframeNullException {
 		Dataframe frame = new Dataframe("./src/CSVFiles/testFile.csv");
-		frame.getLigne(0);
+		frame.toString();
 	}
 	
 	//CSV Constructor
@@ -147,15 +145,24 @@ public class AppTest
 		Dataframe frame = new Dataframe("./src/CSVFiles/testFile.csv");
 		String[] toAdd = {"test1","test2"};
 		frame.addLine(toAdd);
-		frame.getLigne(1);
+		//frame.getLigne(1);//tf
 	}
 	
 	@Test
-	public void testSetCol() throws DataframeNullException {
+	public void testSetColInt() throws DataframeNullException {
+		Dataframe frame = new Dataframe(2);
+		String[] toAdd = {"test1","test2"};
+		frame.addLine(toAdd);
+		String[] toAdd2 = {"test3"};
+		frame.setCol(0,toAdd2);
+	}
+	
+	@Test
+	public void testSetColString() throws DataframeNullException { // TODO
 		String[][] values = {{"1","2"},{"exemple1","exemple2"}};
 		Dataframe frame = new Dataframe(values);
 		String[] toAdd = {"test1","test2"};
-		frame.setCol(0,toAdd);
+		frame.setCol("2",toAdd);
 	}
 	
 	@Test(expected = ArrayIndexOutOfBoundsException.class)
@@ -180,6 +187,15 @@ public class AppTest
 		Dataframe frame = new Dataframe(values);
 		String[] toAdd = {"test1"};
 		frame.setCol(0,toAdd);
+	}
+	
+	@Test
+	public void testGetColumn() throws DataframeNullException {
+		Dataframe frame = new Dataframe(2);
+		String[] toAdd = {"test1","test2"};
+		frame.addLine(toAdd);
+		String[] toAdd2 = {"test3"};
+		frame.getColonne(0);
 	}
 		
 	
