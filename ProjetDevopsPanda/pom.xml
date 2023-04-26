@@ -5,8 +5,8 @@
   
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>BreackfastClub</groupId>
-  <artifactId>devops-main</artifactId>
+  <groupId>BreakfastClub</groupId>
+  <artifactId>pandas-main</artifactId>
   <version>0.0.1-SNAPSHOT</version>
 
   <name>ProjetDevopsPanda</name>

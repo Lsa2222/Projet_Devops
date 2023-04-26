@@ -1,14 +1,12 @@
 <project>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>BreackfastClub</groupId>
-  <artifactId>ProjetDevopsPanda</artifactId>
+  <groupId>BreakfastClub</groupId>
+  <artifactId>devops-pandas</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-
-  <name>ProjetDevopsPanda</name>
-  <url>https://github.com/Lsa2222/Projet_Devops</url>
   
   <packaging>pom</packaging>
+  
   <modules>
-	<module>devops-main</module>
+	<module>ProjetDevopsPanda</module>
   </modules>
 </project>
