@@ -15,19 +15,32 @@ public class Dataframe {
 	private static AtomicInteger columnId = new AtomicInteger(0);
 	private Colonne[] columns;
 	
-	public Dataframe() {
-		// TODO
+	/**
+	 * @throws DataframeNullException
+	 */
+	public Dataframe() throws DataframeNullException {
+		throw new DataframeNullException("Cannot create a new dataframe with no information.");
 	}
 	
 	/**
 	 * Content-only constructor, 
 	 * Column names auto-generated following format 'A', 'B'...
 	 * @param content the content to be used in columns
+	 * @throws DataframeNullException 
 	 */
-	public Dataframe(Object[][] content) {
+	public Dataframe(Object[][] content) throws DataframeNullException {
 		
-		//TODO: check for empty content and/or empty columns
-		
+		if (content == null) {
+			throw new DataframeNullException("Cannot create a new dataframe with no information.");
+		}
+		else if (content.length == 0) {
+			throw new DataframeNullException("Cannot create a new dataframe with no information.");
+		}
+		else {
+			if (content[0].length == 0) {
+				throw new DataframeNullException("Cannot create a new dataframe with no information.");
+			}
+		}
 		columns = new Colonne[content.length];
 		
 		for(int i=0;i<content.length;i++) {
@@ -36,7 +49,13 @@ public class Dataframe {
 		}
 	}
 	
-	public Dataframe(String[] tab_names) {
+	public Dataframe(String[] tab_names) throws DataframeNullException {
+		if (tab_names == null) {
+			throw new DataframeNullException("Cannot create a new dataframe with no information.");
+		}
+		else if(tab_names.length == 0){
+			throw new DataframeNullException("Cannot create a new dataframe with no information.");
+		}
 		columns = new Colonne[tab_names.length];
 		
 		for (int i = 0;i<tab_names.length;i++) {
@@ -44,9 +63,13 @@ public class Dataframe {
 		}
 	}
 	
-	public Dataframe(int nbcols) {
-		
-		//TODO: check for empty content and/or empty columns
+	public Dataframe(int nbcols) throws DataframeNullException {
+		if (nbcols < 0) {
+	        throw new IllegalArgumentException("Invalid indices");
+	    }
+		else if (nbcols == 0) {
+			throw new DataframeNullException("Cannot create a new dataframe with no information.");
+		}
 		
 		columns = new Colonne[nbcols];
 		
@@ -56,7 +79,7 @@ public class Dataframe {
 		}
 	}
 	
-	public Dataframe(String file_name) {
+	public Dataframe(String file_name) throws DataframeNullException {
 	    try
 	    {
 	      File file = new File(file_name);    
@@ -85,8 +108,15 @@ public class Dataframe {
 	/**
 	 * @param line the line that has to be add in the dataframe
 	 * add a line at the end of the dataframe
+	 * @throws DataframeNullException 
 	 */
-	public void addLine(Object[] line) {
+	public void addLine(Object[] line) throws DataframeNullException {
+		if (line == null) {
+			throw new DataframeNullException("Cannot create a new line with no information.");
+		}
+		else if(line.length != columns.length || line.length == 0) {
+			throw new IllegalArgumentException("The line doesn't have the same size than the other dataframe lines.");
+		}
 		Integer index;
 		if (columns[0].isNull())
 			index = 0;
@@ -106,8 +136,12 @@ public class Dataframe {
 	/**
 	 * @param indice is the position of the column you want to change
 	 * @param col is the content of the column you want to put in the dataframe
+	 * @throws DataframeNullException 
 	 */
-	public void setCol(Object indice, Object[] col) {
+	public void setCol(Object indice, Object[] col) throws DataframeNullException {
+		if (col == null) {
+			throw new DataframeNullException("Cannot create a new column with no information.");
+		}
 		int position = -1;
 		String label = "";
 		if ((indice.getClass().getSimpleName()).equals("String")) {
@@ -123,7 +157,13 @@ public class Dataframe {
 			label = columns[position].getLabel();
 		}
 		else {
-			return;
+			throw new IllegalArgumentException("Invalid type argument: must have int or String.");
+		}
+		if (position <0) {
+			throw new IllegalArgumentException("Invalid indices");
+		}
+		if (columns[0] != null && col.length != columns[0].length()) {
+			throw new IllegalArgumentException("The argument has not the same length as the columns");
 		}
 		Colonne colonne = new Colonne(label,col);
 		columns[position] = colonne;
@@ -132,8 +172,9 @@ public class Dataframe {
 	/**
 	 * @param indice is the position of the column you want to see
 	 * @return a dataframe with only one column which is the column you wanted so that you can see it with toString
+	 * @throws DataframeNullException 
 	 */
-	public Dataframe getColonne(Object indice) {
+	public Dataframe getColonne(Object indice) throws DataframeNullException {
 		int position = -1;
 		String[] label = new String[columns.length];
 		if ((indice.getClass().getSimpleName()).equals("String")) {
@@ -149,7 +190,10 @@ public class Dataframe {
 			label[0] = columns[position].getLabel();
 		}
 		else {
-			return null;
+			throw new IllegalArgumentException("Invalid type argument: must have int or String.");
+		}
+		if (position <0) {
+			throw new IllegalArgumentException("Invalid indices");
 		}
 		Dataframe dat = new Dataframe(label);
 		dat.setCol(0, columns[position].getContent());
@@ -159,8 +203,9 @@ public class Dataframe {
 	/**
 	 * @param indice is the position of the line you want to see
 	 * @return a dataframe with only one line which is the line you wanted so that you can see it with toString
+	 * @throws DataframeNullException 
 	 */
-	public Dataframe getLigne(int indice){
+	public Dataframe getLigne(int indice) throws DataframeNullException{
 		String[] labels = new String[columns.length];
 		for(int i =0;i<columns.length;i++) {
 			labels[i] = columns[i].getLabel();
@@ -344,8 +389,9 @@ public class Dataframe {
 	 * @param endcol is the last column that you want
 	 * @return a new dataframe which is a subpart of the previous dataframe
 	 * creates a new dataframe from startrow and startcol to endrow and endcol of the previous one
+	 * @throws DataframeNullException 
 	 */
-	public Dataframe getPartDataframe(int startrow, int endrow,int startcol, int endcol) {
+	public Dataframe getPartDataframe(int startrow, int endrow,int startcol, int endcol) throws DataframeNullException {
 		if (startrow < 0 || startrow > endrow || endrow >= columns[0].length() || startcol < 0 || startcol > endcol || endcol >= columns.length) {
 	        throw new IllegalArgumentException("Indices invalides");
 	    }
