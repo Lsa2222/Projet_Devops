@@ -10,9 +10,12 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: main dataframe
+    branches: 
+      - main 
+      - dataframe
   pull_request:
-    branches: main
+    branches: 
+      - main
 jobs:
   build:
 
