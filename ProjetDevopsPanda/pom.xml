@@ -43,11 +43,6 @@
           <artifactId>maven-compiler-plugin</artifactId>
           <version>3.8.0</version>
         </plugin>
-        <plugin>
-			<artifactId>maven-failsafe-plugin</artifactId>
-			<version>3.0.0</version>
-		</plugin>
-        <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
           <version>2.22.1</version>
         </plugin>
@@ -72,26 +67,26 @@
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>3.0.0</version>
         </plugin>
-		<plugin>
-		  <groupId>org.jacoco</groupId>
-		  <artifactId>jacoco-maven-plugin</artifactId>
-		  <version>0.8.10</version>
-		  <executions>
-		    <execution>
-			  <id>prepare-agent</id>
-			  <goals>
-				<goal>prepare-agent</goal>
-			  </goals>
-			</execution>
-			<execution>
-			  <id>report</id>
-			  <phase>test</phase>
-			  <goals>
-				<goal>report</goal>
-			  </goals>
-			</execution>
+	  <plugin>
+	    <groupId>org.jacoco</groupId>
+	      <artifactId>jacoco-maven-plugin</artifactId>
+	      <version>0.8.10</version>
+	      <executions>
+		<execution>
+		  <id>prepare-agent</id>
+		  <goals>
+		    <goal>prepare-agent</goal>
+		  </goals>
+		</execution>
+		<execution>
+		  <id>report</id>
+		  <phase>test</phase>
+		  <goals>
+		    <goal>report</goal>
+		  </goals>
+		</execution>
 	      </executions>
-		</plugin>
+	</plugin>
       </plugins>
   </build>
 </project>
