@@ -6,4 +6,9 @@
 
   <name>ProjetDevopsPanda</name>
   <url>https://github.com/Lsa2222/Projet_Devops</url>
+  
+  <packaging>pom</packaging>
+  <modules>
+	<module>devops-main</module>
+  </modules>
 </project>
