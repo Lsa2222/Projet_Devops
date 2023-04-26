@@ -81,18 +81,7 @@ public class Dataframe {
 	      e.printStackTrace();
 	    }
 	}
-	
-	/*public Dataframe(String[] labels, Colonne[] newcolumns) {
-        if (labels.length != newcolumns.length) {
-            throw new IllegalArgumentException("Number of labels and columns must match");
-        }
-        for (int i = 0;i<tab_names.length;i++) {
-			columns[i] = new Colonne(labels[i],newcolumns[i]);
-		}
-        this.labels = labels;
-        this.columns = newcolumns;
-    }*/
-	
+
 	
 	public void addLine(Object[] line) {
 		Integer index;
@@ -168,7 +157,6 @@ public class Dataframe {
 		}
 		return data;
 	}
-	
 	
 	
 	public Colonne[] getColumns() {
@@ -287,25 +275,29 @@ public class Dataframe {
 			columns[col].setLabel(value);
 	}
 	
-	/*public Dataframe getPartDataframe(int startrow, int endrow,int startcol, int endcol) {
+	public Dataframe getPartDataframe(int startrow, int endrow,int startcol, int endcol) {
 		if (startrow < 0 || startrow > endrow || endrow >= columns[0].length() || startcol < 0 || startcol > endcol || endcol >= columns.length) {
 	        throw new IllegalArgumentException("Indices invalides");
 	    }
-		String[] labels = new String[endcol - startcol];
-		for(int i =startcol;i<endcol;i++) {
-			labels[i] = columns[i].getLabel();
+		int decal = endcol - startcol + 1;
+		String[] labels = new String[decal];
+		for(int i =startcol;i<endcol+1;i++) {
+			labels[i-startcol] = columns[i].getLabel();
 		}
-		Colonne[] newcolumns = new Colonne[endcol - startcol + 1];
-	    for (int i = startcol; i <= endcol; i++) {
-	        Object[] newData = Arrays.copyOfRange(columns[i].getContent(), startrow, endrow + 1);
+		Colonne[] newcolumns = new Colonne[decal];
+	    for (int i = startcol; i < endcol+1; i++) {
+	        Object[] newData = new Object[decal];
+	        for(int j = startrow; j < endrow+1;j++) {
+	        	newData[j - startrow] = columns[i].getContent()[j];
+	        }
 	        newcolumns[i - startcol] = new Colonne(columns[i].getLabel(), newData);
 	    }
-	    Dataframe data = new Dataframe(labels,newcolumns);
+	    Dataframe data = new Dataframe(labels);
+	    data.setColumns(newcolumns);
 	    return data;
-	}*/
-	
-	
-    /**
+	}
+
+	/**
      * generates names in format A,B,C,[...],Y,Z,AA,AB,[...],ZZ,AAA...
      * @param id the id to be converted to a string name.
      * @return the string containing the name
