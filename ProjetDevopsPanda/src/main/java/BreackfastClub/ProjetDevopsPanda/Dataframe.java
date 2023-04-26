@@ -165,11 +165,6 @@ public class Dataframe {
 		if (position <0) {
 			throw new IllegalArgumentException("Invalid indices");
 		}
-		if (!(columns[0].isNull())) {
-			if (col.length != columns[0].length()) {
-				throw new IllegalArgumentException("The argument has not the same length as the columns");
-			}
-		}
 		
 		Colonne colonne = new Colonne(label,col);
 		columns[position] = colonne;
@@ -181,33 +176,39 @@ public class Dataframe {
 	 * @throws DataframeNullException 
 	 */
 	public Dataframe getColonne(Object indice) throws DataframeNullException {
-		int position = -1;
-		String[] label = new String[columns.length];
-		if ((indice.getClass().getSimpleName()).equals("String")) {
-			for(int i = 0;i<columns.length;i++) {
-				if (columns[i].getLabel() == indice) {
-					position = i;
-				}
-			}
-			label[0] = indice.toString();
-		}
-		else if ((indice.getClass().getSimpleName()).equals("Integer")){
-			position = (Integer)indice;
-			if (position<0 || position > columns.length) {
-				throw new IllegalArgumentException("Invalid indices");
-			}
-			label[0] = columns[position].getLabel();
-		}
-		else {
-			throw new IllegalArgumentException("Invalid type argument: must have int or String.");
-		}
-		if (position <0) {
-			throw new IllegalArgumentException("Invalid indices");
-		}
-		Dataframe dat = new Dataframe(label);
-		dat.setCol(0, columns[position].getContent());
-		return dat;
-	}
+        int position = -1;
+        String[] label = new String[1];
+        if ((indice.getClass().getSimpleName()).equals("String")) {
+            for(int i = 0;i<columns.length;i++) {
+                if (columns[i].getLabel() == indice) {
+                    position = i;
+                }
+            }
+            label[0] = indice.toString();
+        }
+        else if ((indice.getClass().getSimpleName()).equals("Integer")){
+            position = (Integer)indice;
+            if (position<0 || position > columns.length) {
+                throw new IllegalArgumentException("Invalid indices");
+            }
+            label[0] = columns[position].getLabel();
+        }
+        else {
+            throw new IllegalArgumentException("Invalid type argument: must have int or String.");
+        }
+        if (position <0) {
+            throw new IllegalArgumentException("Invalid indices");
+        }
+        
+        Object[] ajouter = columns[position].getContent();
+        Object[] line = new Object[1];
+        Dataframe dat = new Dataframe(label);
+        for(int i = 0; i < ajouter.length;i++) {
+            line[0] = ajouter[i];
+            dat.addLine(line);
+        }
+        return dat;
+    }
 	
 	/**
 	 * @param indice is the position of the line you want to see
