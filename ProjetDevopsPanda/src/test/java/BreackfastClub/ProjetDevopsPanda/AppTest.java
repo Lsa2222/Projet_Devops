@@ -187,11 +187,13 @@ public class AppTest
 	public void testSetColString() throws DataframeNullException { // TODO
 		String[] values = {"1","2"};
 		Dataframe frame = new Dataframe(values);
-		String[] toAdd = {"test1"};
-		frame.setCol("2",toAdd);
+		String[] toAdd = {"test1","test2"};
+		frame.addLine(toAdd);
+		String[] toAdd2 = {"test1"};
+		frame.setCol("2",toAdd2);
 	}
 	
-	@Test
+	@Test(expected = IllegalArgumentException.class)
 	public void testSetColColumnsNull() throws DataframeNullException {
 		Dataframe frame = new Dataframe(1);
 		String[] toAdd = {"test1"};
@@ -213,6 +215,17 @@ public class AppTest
 		String[] toAdd = {"test1","test2"};
 		frame.setCol(4,toAdd);
 	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testSetColNotSameLength() throws DataframeNullException {
+		String[] values = {"1","2"};
+		Dataframe frame = new Dataframe(values);
+		String[] toAdd = {"test1","test2"};
+		frame.addLine(toAdd);
+		String[] toAdd2 = {"test1", "test2", "test3"};
+		frame.setCol("2",toAdd2);
+	}
+	
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testSetColOutBondString() throws DataframeNullException {
