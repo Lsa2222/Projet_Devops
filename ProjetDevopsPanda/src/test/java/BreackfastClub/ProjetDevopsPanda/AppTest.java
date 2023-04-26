@@ -13,7 +13,10 @@ import org.junit.Test;
 public class AppTest 
 {
     
-    /*General constructor*/
+/* -----------------------------------------------------------------------------------------------------------------------
+	Test Constructors
+   -----------------------------------------------------------------------------------------------------------------------*/
+
 	@Test
 	public void testDataFrameisNotEmpty() throws DataframeNullException {
 		String[][] values = {{"1","2"},{"exemple1","exemple2"}};
@@ -28,23 +31,28 @@ public class AppTest
 		assertTrue(frame.getColumns()[0].isNull());
 	}
 	
-	@Test(expected = NullPointerException.class)
-	public void testGetLineWithNoContentDataframe() throws DataframeNullException {
-		String[] tab_names = {"test1","test2","test3"};
-		Dataframe frame = new Dataframe(tab_names);
-		frame.getLigne(0);
-	}
-	
 	@Test
 	public void testDataFrameWithColmumNamesGenerated() throws DataframeNullException {
 		Dataframe frame = new Dataframe(5);
 		assertTrue(frame.getColumns()[0].isNull());
 	}
 	
-	@Test(expected = NullPointerException.class)
-	public void testGetLineWithNoContentWithColmumNamesGenerated() throws DataframeNullException {
-		Dataframe frame = new Dataframe(5);
-		frame.getLigne(0);
+	//CSV Constructor
+	@Test
+	public void testCreateDataframeWithCSV() throws DataframeNullException {
+		Dataframe frame = new Dataframe("./src/CSVFiles/testFile.csv");
+		frame.toString();
+	}
+	
+	@Test(expected = DataframeNullException.class)
+	public void testDataFrameConstructorEmpty() throws DataframeNullException {
+		Dataframe frame = new Dataframe();
+	}
+	
+	@Test(expected = DataframeNullException.class)
+	public void testDataFrameEmptyTab() throws DataframeNullException {
+		String[][] values = new String[0][1];
+		Dataframe frame = new Dataframe(values);
 	}
 	
 	@Test(expected = DataframeNullException.class)
@@ -53,13 +61,34 @@ public class AppTest
 		Dataframe frame = new Dataframe(values);
 	}
 	
-	@Test(expected = IndexOutOfBoundsException.class)
-	public void testGetLigneOutofBound() throws DataframeNullException {
-		String[][] values = {{"1","2"},{"exemple1","exemple2"}};
-		Dataframe frame = new Dataframe(values);
-		frame.getLigne(3);
+	//CSV Constructor
+	@Test(expected = NullPointerException.class)
+	public void testCreateDataframeWithCSVUnknownName() throws DataframeNullException {
+		Dataframe frame = new Dataframe("./src/CSVFiles/testFil.csv");
+		frame.getLigne(0);
 	}
 	
+	@Test(expected = DataframeNullException.class)
+	public void testDataFrameEmptyString() throws DataframeNullException {
+		String[] values = new String[0];
+		Dataframe frame = new Dataframe(values);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testDataFrameNegatif() throws DataframeNullException {
+		int values = -1;
+		Dataframe frame = new Dataframe(values);
+	}
+	
+	@Test(expected = DataframeNullException.class)
+	public void testDataFrameZero() throws DataframeNullException {
+		int values = 0;
+		Dataframe frame = new Dataframe(values);
+	}
+	
+/* -----------------------------------------------------------------------------------------------------------------------
+	Test AddLine
+   -----------------------------------------------------------------------------------------------------------------------*/
 	//Name Constructor
 	@Test
 	public void testAddNewLine() throws DataframeNullException {
@@ -127,26 +156,15 @@ public class AppTest
 	
 	//CSV Constructor
 	@Test
-	public void testCreateDataframeWithCSV() throws DataframeNullException {
-		Dataframe frame = new Dataframe("./src/CSVFiles/testFile.csv");
-		frame.toString();
-	}
-	
-	//CSV Constructor
-	@Test(expected = NullPointerException.class)
-	public void testCreateDataframeWithCSVUnknownName() throws DataframeNullException {
-		Dataframe frame = new Dataframe("./src/CSVFiles/testFil.csv");
-		frame.getLigne(0);
-	}
-	
-	//CSV Constructor
-	@Test
 	public void testAddNewLineWithCSV() throws DataframeNullException {
 		Dataframe frame = new Dataframe("./src/CSVFiles/testFile.csv");
 		String[] toAdd = {"test1","test2"};
 		frame.addLine(toAdd);
 		//frame.getLigne(1);//tf
 	}
+/* -----------------------------------------------------------------------------------------------------------------------
+	Test SetCol
+   -----------------------------------------------------------------------------------------------------------------------*/
 	
 	@Test
 	public void testSetColInt() throws DataframeNullException {
@@ -188,7 +206,9 @@ public class AppTest
 		String[] toAdd = {"test1"};
 		frame.setCol(0,toAdd);
 	}
-	
+/* -----------------------------------------------------------------------------------------------------------------------
+	Test GetCol
+   -----------------------------------------------------------------------------------------------------------------------*/	
 	@Test
 	public void testGetColumn() throws DataframeNullException {
 		Dataframe frame = new Dataframe(2);
@@ -198,8 +218,35 @@ public class AppTest
 		frame.getColonne(0);
 	}
 		
+/* -----------------------------------------------------------------------------------------------------------------------
+	Test GetLine
+   -----------------------------------------------------------------------------------------------------------------------*/
 	
-	/*
+	@Test(expected = NullPointerException.class)
+	public void testGetLineWithNoContentDataframe() throws DataframeNullException {
+		String[] tab_names = {"test1","test2","test3"};
+		Dataframe frame = new Dataframe(tab_names);
+		frame.getLigne(0);
+	}
+	
+	@Test(expected = NullPointerException.class)
+	public void testGetLineWithNoContentWithColmumNamesGenerated() throws DataframeNullException {
+		Dataframe frame = new Dataframe(5);
+		frame.getLigne(0);
+	}
+	
+	@Test(expected = IndexOutOfBoundsException.class)
+	public void testGetLigneOutofBound() throws DataframeNullException {
+		String[][] values = {{"1","2"},{"exemple1","exemple2"}};
+		Dataframe frame = new Dataframe(values);
+		frame.getLigne(3);
+	}
+	
+/* -----------------------------------------------------------------------------------------------------------------------
+	Test Restes
+   -----------------------------------------------------------------------------------------------------------------------*/
+	
+/*
 	@Test
 	public int[] testSizeDataFrame() {
 		String[][] values = {{1,2},{"exemple1","exemple2"}};
