@@ -31,12 +31,15 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn test package --file pom.xml
-
+    - name: Output check
+      run:
+        ls /target/
     - name: Save code coverage result as artifacts
       uses: actions/upload-artifact@v3
       with:
         name: pdfs
         path: target/site/jacoco/jacoco.csv
+        
   badges:
   
     runs-on: ubuntu-latest
