@@ -7,6 +7,9 @@
 # Projet_Devops
 Projet de devops en M1 info de l'année 2023
 
+## Doc générée automatiquement disponible ici:
+<a href="https://lsa2222.github.io/Projet_Devops/BreackfastClub/ProjetDevopsPanda/package-summary.html">ici</a>
+
 ## Fonctionnalités
 
 * Création :
