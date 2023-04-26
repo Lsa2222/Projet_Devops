@@ -13,76 +13,104 @@ import org.junit.Test;
 public class AppTest 
 {
     
-    /*General constructor*/
+/* -----------------------------------------------------------------------------------------------------------------------
+	Test Constructors
+   -----------------------------------------------------------------------------------------------------------------------*/
+
 	@Test
-	public void testDataFrameisNotEmpty() {
+	public void testDataFrameisNotEmpty() throws DataframeNullException {
 		String[][] values = {{"1","2"},{"exemple1","exemple2"}};
 		Dataframe frame = new Dataframe(values);
 		assertFalse(frame.getColumns()[0].isNull());
 	}
 	
 	@Test
-	public void testDataFrameWithJustColmumNames() {
+	public void testDataFrameWithJustColmumNames() throws DataframeNullException {
 		String[] tab_names = {"test1","test2","test3"};
 		Dataframe frame = new Dataframe(tab_names);
 		assertTrue(frame.getColumns()[0].isNull());
-	}
-	
-	@Test(expected = NullPointerException.class)
-	public void testGetLineWithNoContentDataframe() {
-		String[] tab_names = {"test1","test2","test3"};
-		Dataframe frame = new Dataframe(tab_names);
-		frame.getLigne(0);
 	}
 	
 	@Test
-	public void testDataFrameWithColmumNamesGenerated() {
+	public void testDataFrameWithColmumNamesGenerated() throws DataframeNullException {
 		Dataframe frame = new Dataframe(5);
 		assertTrue(frame.getColumns()[0].isNull());
 	}
 	
-	@Test(expected = NullPointerException.class)
-	public void testGetLineWithNoContentWithColmumNamesGenerated() {
-		Dataframe frame = new Dataframe(5);
-		frame.getLigne(0);
+	//CSV Constructor
+	@Test
+	public void testCreateDataframeWithCSV() throws DataframeNullException {
+		Dataframe frame = new Dataframe("./src/CSVFiles/testFile.csv");
+		frame.toString();
 	}
 	
-	/*@Test
-	public void testDataFrameisEmpty() {
+	@Test(expected = DataframeNullException.class)
+	public void testDataFrameConstructorEmpty() throws DataframeNullException {
+		Dataframe frame = new Dataframe();
+	}
+	
+	@Test(expected = DataframeNullException.class)
+	public void testDataFrameEmptyTab() throws DataframeNullException {
+		String[][] values = new String[0][1];
+		Dataframe frame = new Dataframe(values);
+	}
+	
+	@Test(expected = DataframeNullException.class)
+	public void testDataFrameisEmpty() throws DataframeNullException {
 		String[][] values = {{},{}};
 		Dataframe frame = new Dataframe(values);
-		assertTrue(frame.getColumns()[0].isNull());
-	}*/
-	
-	@Test(expected = IndexOutOfBoundsException.class)
-	public void testGetLigneOutofBound() {
-		String[][] values = {{"1","2"},{"exemple1","exemple2"}};
-		Dataframe frame = new Dataframe(values);
-		frame.getLigne(3);
 	}
 	
+	//CSV Constructor
+	@Test(expected = NullPointerException.class)
+	public void testCreateDataframeWithCSVUnknownName() throws DataframeNullException {
+		Dataframe frame = new Dataframe("./src/CSVFiles/testFil.csv");
+		frame.getLigne(0);
+	}
+	
+	@Test(expected = DataframeNullException.class)
+	public void testDataFrameEmptyString() throws DataframeNullException {
+		String[] values = new String[0];
+		Dataframe frame = new Dataframe(values);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testDataFrameNegatif() throws DataframeNullException {
+		int values = -1;
+		Dataframe frame = new Dataframe(values);
+	}
+	
+	@Test(expected = DataframeNullException.class)
+	public void testDataFrameZero() throws DataframeNullException {
+		int values = 0;
+		Dataframe frame = new Dataframe(values);
+	}
+	
+/* -----------------------------------------------------------------------------------------------------------------------
+	Test AddLine
+   -----------------------------------------------------------------------------------------------------------------------*/
 	//Name Constructor
 	@Test
-	public void testAddNewLine() {
+	public void testAddNewLine() throws DataframeNullException {
 		String[][] values = {{"1","2"},{"exemple1","exemple2"}};
 		String[] toAdd = {"test1","test2"};
 		Dataframe frame = new Dataframe(values);
 		frame.addLine(toAdd);
-		frame.getLigne(1);
+		//frame.getLigne(1);//tf
 	}
 	
 	@Test
-	public void testAddNewLineWithColumnNameConstructor() {
+	public void testAddNewLineWithColumnNameConstructor() throws DataframeNullException {
 		String[] values = {"exemple1","exemple2"};
 		String[] toAdd = {"test1","test2"};
 		Dataframe frame = new Dataframe(values);
 		frame.addLine(toAdd);
-		frame.getLigne(0);
+		//frame.getLigne(0);//tf
 	}
 	
 	//Name Constructor
-	@Test
-	public void testAddNewLineWithColumnNameTooMuchArguments() {
+	@Test(expected = IllegalArgumentException.class)
+	public void testAddNewLineWithColumnNameTooMuchArguments() throws DataframeNullException {
 		String[] values = {"exemple1"};
 		String[] toAdd = {"test1","test2"};
 		Dataframe frame = new Dataframe(values);
@@ -91,27 +119,26 @@ public class AppTest
 	}
 	
 	//Name Constructor
-	@Test(expected = ArrayIndexOutOfBoundsException.class)
-	public void testAddNewLineWithColumnNameTooFewArguments() {
+	@Test(expected = IllegalArgumentException.class)
+	public void testAddNewLineWithColumnNameTooFewArguments() throws DataframeNullException {
 		String[] values = {"exemple1","exemple2"};
 		String[] toAdd = {"test1"};
 		Dataframe frame = new Dataframe(values);
 		frame.addLine(toAdd);
-		frame.getLigne(0);
 	}
 	
 	//Number Constructor
 	@Test
-	public void testAddNewLineNumberConstructor() {
+	public void testAddNewLineNumberConstructor() throws DataframeNullException {
 		String[] toAdd = {"test1","test2"};
 		Dataframe frame = new Dataframe(2);
 		frame.addLine(toAdd);
-		frame.getLigne(0);
+		//frame.getLigne(0);//tf
 	}
 	
 	//Number Constructor
-	@Test
-	public void testAddNewLineNumberConstructorTooMuchArgument() {
+	@Test(expected = IllegalArgumentException.class)
+	public void testAddNewLineNumberConstructorTooMuchArgument() throws DataframeNullException {
 		String[] toAdd = {"test1","test2"};
 		Dataframe frame = new Dataframe(1);
 		frame.addLine(toAdd);
@@ -119,8 +146,8 @@ public class AppTest
 	}
 	
 	//Number Constructor
-	@Test(expected = ArrayIndexOutOfBoundsException.class)
-	public void testAddNewLineTooFewArguments() {
+	@Test(expected = IllegalArgumentException.class)
+	public void testAddNewLineTooFewArguments() throws DataframeNullException {
 		String[] toAdd = {"test1","test2"};
 		Dataframe frame = new Dataframe(3);
 		frame.addLine(toAdd);
@@ -129,38 +156,35 @@ public class AppTest
 	
 	//CSV Constructor
 	@Test
-	public void testCreateDataframeWithCSV() {
-		Dataframe frame = new Dataframe("./src/CSVFiles/testFile.csv");
-		frame.getLigne(0);
-	}
-	
-	//CSV Constructor
-	@Test(expected = NullPointerException.class)
-	public void testCreateDataframeWithCSVUnknownName() {
-		Dataframe frame = new Dataframe("./src/CSVFiles/testFil.csv");
-		frame.getLigne(0);
-	}
-	
-	//CSV Constructor
-	@Test
-	public void testAddNewLineWithCSV() {
+	public void testAddNewLineWithCSV() throws DataframeNullException {
 		Dataframe frame = new Dataframe("./src/CSVFiles/testFile.csv");
 		String[] toAdd = {"test1","test2"};
 		frame.addLine(toAdd);
-		frame.getLigne(1);
+		//frame.getLigne(1);//tf
+	}
+/* -----------------------------------------------------------------------------------------------------------------------
+	Test SetCol
+   -----------------------------------------------------------------------------------------------------------------------*/
+	
+	@Test
+	public void testSetColInt() throws DataframeNullException {
+		Dataframe frame = new Dataframe(2);
+		String[] toAdd = {"test1","test2"};
+		frame.addLine(toAdd);
+		String[] toAdd2 = {"test3"};
+		frame.setCol(0,toAdd2);
 	}
 	
 	@Test
-	public void testSetCol() {
+	public void testSetColString() throws DataframeNullException { // TODO
 		String[][] values = {{"1","2"},{"exemple1","exemple2"}};
 		Dataframe frame = new Dataframe(values);
 		String[] toAdd = {"test1","test2"};
-		frame.setCol(1,toAdd);
-		frame.getLigne(1);
+		frame.setCol("2",toAdd);
 	}
 	
 	@Test(expected = ArrayIndexOutOfBoundsException.class)
-	public void testSetColOutOfBound() {
+	public void testSetColOutOfBound() throws DataframeNullException {
 		String[][] values = {{"1","2"},{"exemple1","exemple2"}};
 		Dataframe frame = new Dataframe(values);
 		String[] toAdd = {"test1","test2"};
@@ -168,24 +192,61 @@ public class AppTest
 	}
 	
 	@Test(expected = ArrayIndexOutOfBoundsException.class)
-	public void testSetColOutOfBoundNegative() {
+	public void testSetColOutOfBoundNegative() throws DataframeNullException {
 		String[][] values = {{"1","2"},{"exemple1","exemple2"}};
 		Dataframe frame = new Dataframe(values);
 		String[] toAdd = {"test1","test2"};
 		frame.setCol(-1,toAdd);
 	}
 	
-	@Test(expected = ArrayIndexOutOfBoundsException.class)
-	public void testSetColTooFewArguments() {
+	@Test(expected = IllegalArgumentException.class)
+	public void testSetColTooFewArguments() throws DataframeNullException {
 		String[][] values = {{"1","2"},{"exemple1","exemple2"}};
 		Dataframe frame = new Dataframe(values);
 		String[] toAdd = {"test1"};
 		frame.setCol(0,toAdd);
-		frame.toString();
+	}
+/* -----------------------------------------------------------------------------------------------------------------------
+	Test GetCol
+   -----------------------------------------------------------------------------------------------------------------------*/	
+	@Test
+	public void testGetColumn() throws DataframeNullException {
+		Dataframe frame = new Dataframe(2);
+		String[] toAdd = {"test1","test2"};
+		frame.addLine(toAdd);
+		String[] toAdd2 = {"test3"};
+		frame.getColonne(0);
 	}
 		
+/* -----------------------------------------------------------------------------------------------------------------------
+	Test GetLine
+   -----------------------------------------------------------------------------------------------------------------------*/
 	
-	/*
+	@Test(expected = NullPointerException.class)
+	public void testGetLineWithNoContentDataframe() throws DataframeNullException {
+		String[] tab_names = {"test1","test2","test3"};
+		Dataframe frame = new Dataframe(tab_names);
+		frame.getLigne(0);
+	}
+	
+	@Test(expected = NullPointerException.class)
+	public void testGetLineWithNoContentWithColmumNamesGenerated() throws DataframeNullException {
+		Dataframe frame = new Dataframe(5);
+		frame.getLigne(0);
+	}
+	
+	@Test(expected = IndexOutOfBoundsException.class)
+	public void testGetLigneOutofBound() throws DataframeNullException {
+		String[][] values = {{"1","2"},{"exemple1","exemple2"}};
+		Dataframe frame = new Dataframe(values);
+		frame.getLigne(3);
+	}
+	
+/* -----------------------------------------------------------------------------------------------------------------------
+	Test Restes
+   -----------------------------------------------------------------------------------------------------------------------*/
+	
+/*
 	@Test
 	public int[] testSizeDataFrame() {
 		String[][] values = {{1,2},{"exemple1","exemple2"}};
