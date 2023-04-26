@@ -63,6 +63,7 @@ L'évaluation de couverture de code se fait grâce au plugin Jacoco de Maven qui
 
 Nous avons fait une branche main sur laquelle nous mettons en place Maven et nous avons modifié le readme.
 Pour les features, nous avons tout fait sur une même branche. Les tests étaient au départ sur une branche à part mais au vu du fait que nous codions essentielement côte à côte, nous avons décidé de mettre les tests dans la même branche que les features.
+Nous aurions sûrement du créer d'autres branches, comme une branche par feature, qui est le système que nous adopterons désormais sur les prochains projet. Par exemple, la mise en place de maven aurait du être fait sur une branche à part, ainsi que chaque nouvelle fonctionnalitées du dataframe.
 
 ## Docker
 
@@ -71,7 +72,7 @@ Nous n'avons pas implémenté Docker par faute de temps.
 ## Feedback
 Voici notre feedback des différents outils utilisés :
 
-Git est un bon outil de versionning, bien que parfois le fait de faire de mauvaises manip peut nous faire perdre du temps, il est très utile et permet de travailler correctement sur un même projet. C'est un outil que nous allons bien sûr réutiliser plus tard.
+Git est un bon outil de versionning, bien que parfois le fait de faire de mauvaises manipulations peut nous faire perdre du temps, il est très utile et permet de travailler correctement sur un même projet, et cela nous fait notemment gagner plus de temps que l'on en perd. C'est un outil que nous allons bien sûr réutiliser plus tard.
 
 Maven 
 
