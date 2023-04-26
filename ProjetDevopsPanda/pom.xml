@@ -42,6 +42,11 @@
         <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
           <version>3.8.0</version>
+          <configuration>
+			  <excludes>
+				  <exclude>BreackfastClub/ProjetDevopsPanda/main.java</exclude>
+			  </excludes>
+		  </configuration>  
         </plugin>
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
@@ -85,17 +90,9 @@
 		    <goals>
 		      <goal>report</goal>
 		    </goals>
-		  </execution>
+		  </execution>	  
 		</executions>
 	  </plugin>
     </plugins>
-    <resources>
-      <resource>
-        <directory>/src/main/java/BreackfasstClub/ProjetDevopsPanda/</directory>
-        <excludes>
-          <exclude>main.java</exclude>
-        </excludes>
-      </resource>
-    </resources>
   </build>
 </project>
