@@ -31,10 +31,7 @@ jobs:
         cache: maven
     - name: Run tests
       run: |
-        mvn -B -f ProjetDevopsPanda/pom.xml package -Pcoverage 
-    - name: Output check
-      run:
-        ls 
+        mvn -B package -Pcoverage 
     - name: Generate JaCoCo badge
       id: jacoco
       uses: cicirello/jacoco-badge-generator@v2
