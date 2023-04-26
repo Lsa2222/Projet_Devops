@@ -165,11 +165,6 @@ public class Dataframe {
 		if (position <0) {
 			throw new IllegalArgumentException("Invalid indices");
 		}
-		if (!(columns[0].isNull())) {
-			if (col.length != columns[0].length()) {
-				throw new IllegalArgumentException("The argument has not the same length as the columns");
-			}
-		}
 		
 		Colonne colonne = new Colonne(label,col);
 		columns[position] = colonne;
