@@ -7,8 +7,7 @@
 # Projet_Devops
 Projet de devops en M1 info de l'année 2023
 
-## Doc générée automatiquement disponible ici:
-<a href="https://lsa2222.github.io/Projet_Devops/BreackfastClub/ProjetDevopsPanda/package-summary.html">ici</a>
+## Doc générée automatiquement disponible <a href="https://lsa2222.github.io/Projet_Devops/BreackfastClub/ProjetDevopsPanda/package-summary.html">ici</a>  
 
 ## Fonctionnalités
 
@@ -76,10 +75,10 @@ Nous n'avons pas implémenté Docker par faute de temps.
 ## Feedback
 Voici notre feedback des différents outils utilisés :
 
-Git est un bon outil de versionning, bien que parfois le fait de faire de mauvaises manipulations peut nous faire perdre du temps, il est très utile et permet de travailler correctement sur un même projet, et cela nous fait notemment gagner plus de temps que l'on en perd. C'est un outil que nous allons bien sûr réutiliser plus tard.
+Git est un bon outil de versionning, bien que parfois le fait de faire de mauvaises manipulations peut nous faire perdre du temps, il est très utile et permet de travailler correctement sur un même projet, et cela nous fait notemment gagner plus de temps que l'on en perd. C'est un outil que nous allons bien sûr réutiliser plus tard. Au dela su simple versionnage l'éventail de fonctionnalités autres est tout aussi attrayant (actions automatisées, pull requests, ouglet pages pour la doc...) et nous sommes loin d'avoir utilisé tout le potentiel dde l'outil.
 
-Maven 
+Maven est un outil de management puissant, qui permet d'avoir acces facilement aux plugins permettant à notre projet de fonctioner. Nous l'avons essentielement utilisé pour vérifier la couverture de nos tests uniquement, mais il peut permettre d'avoir une création des package stable et facilisée indépendament de l'environnement du projet. Nous avons principalement utilisé les actions github afin d'obtenir notre pourcentage de couverture de code, et nous avons manqué de temps pour implementer une intégration continue plus avancée.
 
-JUnit est plutôt facile à utiliser et permet de résoudre pas mal de bugs auxquels on avait pas pensé. Petit bémol sur un grand projet il peut être assez long de réaliser correctement tous les tests, néanmoins, nous pensons qu'il est important de faire des tests pour chaque projet.
+JUnit est plutôt facile à utiliser et permet de résoudre pas mal de bugs auxquels on avait pas pensé. Petit bémol sur un grand projet il peut être assez long de réaliser correctement tous les tests, néanmoins, nous pensons qu'il est important de faire des tests pour chaque projet. L'intégration d'un plugin vérifiant la couverture de code (Jacoco pour nous) permet aussi d'avoir un feedback sur l'efficacité de nos tests rapidement.
 
 ![Etourmi shiny](https://media.tenor.com/zfonKmPNbiEAAAAM/breakfast-club-cool.gif)
