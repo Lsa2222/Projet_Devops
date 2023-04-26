@@ -16,8 +16,7 @@ public class Dataframe {
 	private Colonne[] columns;
 	
 	public Dataframe() {
-		String[] values = {"exemple1","exemple2"};
-		Colonne<String> c = new Colonne<String>("colonne1",values);
+		// TODO
 	}
 	
 	/**
@@ -83,6 +82,10 @@ public class Dataframe {
 	}
 
 	
+	/**
+	 * @param line the line that has to be add in the dataframe
+	 * add a line at the end of the dataframe
+	 */
 	public void addLine(Object[] line) {
 		Integer index;
 		if (columns[0].isNull())
@@ -100,6 +103,10 @@ public class Dataframe {
 		}
 	}
 	
+	/**
+	 * @param indice is the position of the column you want to change
+	 * @param col is the content of the column you want to put in the dataframe
+	 */
 	public void setCol(Object indice, Object[] col) {
 		int position = -1;
 		String label = "";
@@ -122,6 +129,10 @@ public class Dataframe {
 		columns[position] = colonne;
 	}
 	
+	/**
+	 * @param indice is the position of the column you want to see
+	 * @return a dataframe with only one column which is the column you wanted so that you can see it with toString
+	 */
 	public Dataframe getColonne(Object indice) {
 		int position = -1;
 		String[] label = new String[columns.length];
@@ -145,6 +156,10 @@ public class Dataframe {
 		return dat;
 	}
 	
+	/**
+	 * @param indice is the position of the line you want to see
+	 * @return a dataframe with only one line which is the line you wanted so that you can see it with toString
+	 */
 	public Dataframe getLigne(int indice){
 		String[] labels = new String[columns.length];
 		for(int i =0;i<columns.length;i++) {
@@ -159,14 +174,24 @@ public class Dataframe {
 	}
 	
 	
+	/**
+	 * @return the columns of the dataframe
+	 */
 	public Colonne[] getColumns() {
 		return columns;
 	}
 
+	/**
+	 * @param columns is the tab of columns that you want in your dataframe
+	 */
 	public void setColumns(Colonne[] columns) {
 		this.columns = columns;
 	}
 	
+	/**
+	 * @return a string with the number of lines and number of columns of the dataframe
+	 * calculates the size (lines and columns) of the dataframe
+	 */
 	public String getSize() {
 	    int nb_rows = 0;
 	    int nb_cols = columns.length;
@@ -182,6 +207,10 @@ public class Dataframe {
 	    return taille;
 	}
 
+	/**
+	 *@return a string which is the dataframe
+	 *print the dataframe
+	 */
 	@Override
 	public String toString() {
 		//TODO check for empty things, maybe?
@@ -221,6 +250,12 @@ public class Dataframe {
 		return TableCreator.createTable(rawdata);
 	}
 	
+	/**
+	 * @param start is an integer which is the number of the first line you want to print
+	 * @param end is an integer which is the number of the last line you want to print
+	 * @return a string which is the dataframe beetween lines start and end
+	 * print part of the dataframe from start to end
+	 */
 	public String partToString(int start, int end) {
 	    if (start < 0 || end >= columns[0].length() || start > end) {
 	        throw new IllegalArgumentException("Invalid indices");
@@ -246,14 +281,30 @@ public class Dataframe {
     return sb.toString();
 	}*/
 	
+	/**
+	 * @param nb is the number of lines you want to print
+	 * @return a string which i a part of the dataframe
+	 * print the nb first lines of the dataframe
+	 */
 	public String startToString(int nb) {
 		return partToString(0,nb-1);
 	}
 	
+	/**
+	 * @param nb is the number of lines you want to print
+	 * @return a string which i a part of the dataframe
+	 * print the nb last lines of the dataframe
+	 */
 	public String endToString(int nb) {
 		return partToString(columns[0].length() - nb,columns[0].length()-1);
 	}
 	
+	
+	/**
+	 * @param row is the row position of the cell
+	 * @param col is the column position of the cell
+	 * @return the cell in position row and col
+	 */
 	public Object getCell(int row, int col) {
 		if (row < 0 || row >= columns[0].length() || col < 0 || col >= columns.length) {
 	        throw new IndexOutOfBoundsException("Invalid row or column index");
@@ -261,6 +312,12 @@ public class Dataframe {
 	    return columns[col].get(row);
 	}
 	
+	/**
+	 * @param row is the row position of the cell
+	 * @param col is the column position of the cell
+	 * @param value is the value you want to put in the cell
+	 * changes the value of the cell to the value in parameters
+	 */
 	public void setCell(int row, int col, Object value) {
 		if (row < 0 || row >= columns[0].length() || col < 0 || col >= columns.length) {
 	        throw new IndexOutOfBoundsException("Invalid row or column index");
@@ -268,6 +325,11 @@ public class Dataframe {
 		columns[col].setValue(row, value);
 	}
 	
+	/**
+	 * @param col is the column position of the label
+	 * @param value is the new value that you want for your label
+	 * changes the value of the label to the value in parameters
+	 */
 	public void setLabel(int col, String value) {
 		if (col < 0 || col >= columns.length) {
 	        throw new IndexOutOfBoundsException("Invalid row or column index");
@@ -275,6 +337,14 @@ public class Dataframe {
 			columns[col].setLabel(value);
 	}
 	
+	/**
+	 * @param startrow is the first line that you want
+	 * @param endrow is the last line that you want
+	 * @param startcol is the first column that you want
+	 * @param endcol is the last column that you want
+	 * @return a new dataframe which is a subpart of the previous dataframe
+	 * creates a new dataframe from startrow and startcol to endrow and endcol of the previous one
+	 */
 	public Dataframe getPartDataframe(int startrow, int endrow,int startcol, int endcol) {
 		if (startrow < 0 || startrow > endrow || endrow >= columns[0].length() || startcol < 0 || startcol > endcol || endcol >= columns.length) {
 	        throw new IllegalArgumentException("Indices invalides");
