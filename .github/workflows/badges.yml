@@ -1,0 +1,17 @@
+name: badge generation
+
+on:
+  push:
+    branches: 
+      - main 
+  pull_request:
+    branches: 
+      - main
+jobs:
+  build:
+  
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: jacoco-badge-generator
+        uses: cicirello/jacoco-badge-generator@v2.8.1
