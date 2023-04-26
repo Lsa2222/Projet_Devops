@@ -23,7 +23,19 @@ public class Colonne <T>{
 		return label;
 	}
 	
+	public void setLabel(String value) {
+		this.label = value;
+	}
+	
+	public void setValue(int pos,T value) {
+		this.content[pos] = value;
+	}
+	
 	public Boolean isNull(){
 		return content == null;
+	}
+	
+	public T[] getContent() {
+		return content;
 	}
 }
