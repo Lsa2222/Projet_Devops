@@ -162,9 +162,12 @@ public class Dataframe {
 		if (position <0) {
 			throw new IllegalArgumentException("Invalid indices");
 		}
-		if (columns[0] != null && col.length != columns[0].length()) {
-			throw new IllegalArgumentException("The argument has not the same length as the columns");
+		if (columns[0] != null) {
+			if (col.length != columns[0].length()) {
+				throw new IllegalArgumentException("The argument has not the same length as the columns");
+			}
 		}
+		
 		Colonne colonne = new Colonne(label,col);
 		columns[position] = colonne;
 	}
@@ -300,19 +303,11 @@ public class Dataframe {
 	 * @param end is an integer which is the number of the last line you want to print
 	 * @return a string which is the dataframe beetween lines start and end
 	 * print part of the dataframe from start to end
+	 * @throws DataframeNullException 
 	 */
-	public String partToString(int start, int end) {
-	    if (start < 0 || end >= columns[0].length() || start > end) {
-	        throw new IllegalArgumentException("Invalid indices");
-	    }
-	    StringBuilder sb = new StringBuilder();
-	    for (int i = start; i <= end; i++) {
-	        for (int j = 0; j < columns.length; j++) {
-	            sb.append(columns[j].get(i)).append("\t");
-	        }
-	        sb.append("\n");
-	    }
-	    return sb.toString();
+	public String partToString(int startrow, int endrow, int startcol, int endcol) throws DataframeNullException {
+	    Dataframe data = this.getPartDataframe(startrow, endrow, startcol, endcol);
+	    return data.toString();
 	}
 	
 	//ou en utilisant la méthode toString existante
@@ -330,18 +325,20 @@ public class Dataframe {
 	 * @param nb is the number of lines you want to print
 	 * @return a string which i a part of the dataframe
 	 * print the nb first lines of the dataframe
+	 * @throws DataframeNullException 
 	 */
-	public String startToString(int nb) {
-		return partToString(0,nb-1);
+	public String startToString(int nb) throws DataframeNullException {
+		return partToString(0,nb-1, 0, columns.length);
 	}
 	
 	/**
 	 * @param nb is the number of lines you want to print
 	 * @return a string which i a part of the dataframe
 	 * print the nb last lines of the dataframe
+	 * @throws DataframeNullException 
 	 */
-	public String endToString(int nb) {
-		return partToString(columns[0].length() - nb,columns[0].length()-1);
+	public String endToString(int nb) throws DataframeNullException {
+		return partToString(columns[0].length() - nb,columns[0].length()-1, 0, columns.length);
 	}
 	
 	
