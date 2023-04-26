@@ -30,10 +30,7 @@ public class Dataframe {
 	 */
 	public Dataframe(Object[][] content) throws DataframeNullException {
 		
-		if (content == null) {
-			throw new DataframeNullException("Cannot create a new dataframe with no information.");
-		}
-		else if (content.length == 0) {
+		if (content.length == 0) {
 			throw new DataframeNullException("Cannot create a new dataframe with no information.");
 		}
 		else {
@@ -50,10 +47,7 @@ public class Dataframe {
 	}
 	
 	public Dataframe(String[] tab_names) throws DataframeNullException {
-		if (tab_names == null) {
-			throw new DataframeNullException("Cannot create a new dataframe with no information.");
-		}
-		else if(tab_names.length == 0){
+		if(tab_names.length == 0){
 			throw new DataframeNullException("Cannot create a new dataframe with no information.");
 		}
 		columns = new Colonne[tab_names.length];
@@ -114,7 +108,7 @@ public class Dataframe {
 		if (line == null) {
 			throw new DataframeNullException("Cannot create a new line with no information.");
 		}
-		else if(line.length != columns.length || line.length == 0) {
+		else if(line.length != columns.length) {
 			throw new IllegalArgumentException("The line doesn't have the same size than the other dataframe lines.");
 		}
 		Integer index;
@@ -145,8 +139,9 @@ public class Dataframe {
 		int position = -1;
 		String label = "";
 		if ((indice.getClass().getSimpleName()).equals("String")) {
+			System.out.println("ici");
 			for(int i = 0;i<columns.length;i++) {
-				if (columns[i].getLabel() == indice) {
+				if (columns[i].getLabel().equals(indice.toString())) {
 					position = i;
 				}
 			}
@@ -154,6 +149,9 @@ public class Dataframe {
 		}
 		else if ((indice.getClass().getSimpleName()).equals("Integer")){
 			position = (Integer)indice;
+			if (position<0 || position > columns.length) {
+				throw new IllegalArgumentException("Invalid indices");
+			}
 			label = columns[position].getLabel();
 		}
 		else {
@@ -162,7 +160,7 @@ public class Dataframe {
 		if (position <0) {
 			throw new IllegalArgumentException("Invalid indices");
 		}
-		if (columns[0] != null) {
+		if (!(columns[0].isNull())) {
 			if (col.length != columns[0].length()) {
 				throw new IllegalArgumentException("The argument has not the same length as the columns");
 			}
@@ -190,6 +188,9 @@ public class Dataframe {
 		}
 		else if ((indice.getClass().getSimpleName()).equals("Integer")){
 			position = (Integer)indice;
+			if (position<0 || position > columns.length) {
+				throw new IllegalArgumentException("Invalid indices");
+			}
 			label[0] = columns[position].getLabel();
 		}
 		else {
@@ -328,7 +329,7 @@ public class Dataframe {
 	 * @throws DataframeNullException 
 	 */
 	public String startToString(int nb) throws DataframeNullException {
-		return partToString(0,nb-1, 0, columns.length);
+		return partToString(0,nb-1, 0, columns.length-1);
 	}
 	
 	/**
@@ -338,7 +339,7 @@ public class Dataframe {
 	 * @throws DataframeNullException 
 	 */
 	public String endToString(int nb) throws DataframeNullException {
-		return partToString(columns[0].length() - nb,columns[0].length()-1, 0, columns.length);
+		return partToString(columns[0].length() - nb,columns[0].length()-1, 0, columns.length-1);
 	}
 	
 	
@@ -399,10 +400,12 @@ public class Dataframe {
 		}
 		Colonne[] newcolumns = new Colonne[decal];
 	    for (int i = startcol; i < endcol+1; i++) {
-	        Object[] newData = new Object[decal];
+	        Object[] newData = new Object[endrow - startrow + 1];
 	        for(int j = startrow; j < endrow+1;j++) {
 	        	newData[j - startrow] = columns[i].getContent()[j];
 	        }
+	        //System.out.println(i - startcol);
+	        //System.out.println(i);
 	        newcolumns[i - startcol] = new Colonne(columns[i].getLabel(), newData);
 	    }
 	    Dataframe data = new Dataframe(labels);
