@@ -136,10 +136,15 @@ public class Dataframe {
 		if (col == null) {
 			throw new DataframeNullException("Cannot create a new column with no information.");
 		}
+		else if (columns[0].isNull()) {
+			throw new IllegalArgumentException("You can't set a column with a different size than the others.");
+		}
+		else if (col.length != columns[0].length()){
+			throw new IllegalArgumentException("You can't set a column with a different size than the others.");
+		}
 		int position = -1;
 		String label = "";
 		if ((indice.getClass().getSimpleName()).equals("String")) {
-			System.out.println("ici");
 			for(int i = 0;i<columns.length;i++) {
 				if (columns[i].getLabel().equals(indice.toString())) {
 					position = i;
@@ -214,10 +219,14 @@ public class Dataframe {
 		for(int i =0;i<columns.length;i++) {
 			labels[i] = columns[i].getLabel();
 		}
-		Dataframe data = new Dataframe(labels);
+		Object [][] content = new Object[columns.length][1];
 		for (int i =0;i<columns.length;i++) {
 			Object[] val = {columns[i].get(indice)};
-			data.setCol(i,val);
+			content[i] = val;
+		}
+		Dataframe data = new Dataframe(content);
+		for (int i = 0;i<columns.length;i++) {
+			data.setLabel(i, labels[i]);
 		}
 		return data;
 	}
@@ -244,14 +253,12 @@ public class Dataframe {
 	public String getSize() {
 	    int nb_rows = 0;
 	    int nb_cols = columns.length;
-	    if(columns.length > 0) {
-	    	if (columns[0].isNull()) {
-	    		nb_rows = 0;
-	    	}
-	    	else {
-	    		nb_rows = columns[0].length();
-	    	}
-	    }
+    	if (columns[0].isNull()) {
+    		nb_rows = 0;
+    	}
+    	else {
+    		nb_rows = columns[0].length();
+    	}
 	    String taille = "lines : " + Integer.toString(nb_rows) + " cols : " + Integer.toString(nb_cols);
 	    return taille;
 	}
