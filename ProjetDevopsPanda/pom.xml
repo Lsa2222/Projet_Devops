@@ -91,7 +91,7 @@
       </plugins>
       <resources>
       <resource>
-        <directory>/${basedir}/src/main/java/BreackfasstClub/ProjetDevopsPanda/</directory>>
+        <directory>/src/main/java/BreackfasstClub/ProjetDevopsPanda/</directory>>
         <excludes>
           <exclude>main.java</exclude>
         </excludes>
